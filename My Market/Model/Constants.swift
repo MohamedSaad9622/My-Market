@@ -14,8 +14,13 @@ struct Constants {
     static let product_cell_nib = "Product_TableViewCell"
     
     static let collectionNameInFirebase = "Shopping Cart"
-
+    
     static let MaxNumberOfDays_inShoppingCart: Int = 3
 
 }
 
+
+enum UpdateCart_ButtonStatus: String {
+    case added = "cart.badge.plus"
+    case notAdded = "cart.badge.minus"
+}

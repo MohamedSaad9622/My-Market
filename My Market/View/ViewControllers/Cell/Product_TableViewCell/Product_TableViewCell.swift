@@ -10,14 +10,6 @@ import Alamofire
 import AlamofireImage
 
 
-protocol AddToCart_Protocol {
-    func addToCart(productIndex: Int)
-}
-
-protocol RemoveFromCart_Protocol {
-    func RemoveFromCart(productIndex: Int)
-}
-
 
 class Product_TableViewCell: UITableViewCell {
 
@@ -42,7 +34,7 @@ class Product_TableViewCell: UITableViewCell {
     @IBAction func updateShoppingCart(_ sender: Any) {
         guard let productIndex = productIndex else { return }
         if let addToCartDelegate = addToCartDelegate {
-        self.addToCartDelegate?.addToCart(productIndex: productIndex)
+            self.addToCartDelegate?.addToCart(productIndex: productIndex)
         }
         
         if let removeFromCartDelegate = removeFromCartDelegate {

@@ -51,11 +51,9 @@ class ShoppingCart_ViewModel: ShoppingCart_Protocol {
         var filteredProducts: [ProductModel_firebase] = []
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
-        print("products.count \(products.count)")
         for product in products {
             if let date = dateFormatter.date(from: product.timeCreated) {
                 let numberOfDays = Calendar.current.dateComponents([.minute], from: date, to: Date()).minute ?? 0
-                print(numberOfDays)
                 if numberOfDays < Constants.MaxNumberOfDays_inShoppingCart {
                     filteredProducts.append(product)
                 }else{

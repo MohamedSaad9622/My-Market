@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--Products-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController id="Y6W-OH-hqX" customClass="ProductsViewController" customModule="My_Market" customModuleProvider="target" sceneMemberID="viewController">
@@ -33,7 +33,7 @@
                             <constraint firstItem="zkH-Ra-57b" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="S0z-Qr-Jlv"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" selectedImage="xmark.bin.fill" catalog="system" id="FHw-dw-dCf"/>
+                    <tabBarItem key="tabBarItem" title="Products" image="circle.grid.2x2.fill" catalog="system" id="FHw-dw-dCf"/>
                     <connections>
                         <outlet property="products_tableView" destination="zkH-Ra-57b" id="S7W-0z-qXs"/>
                     </connections>
@@ -42,7 +42,7 @@
             </objects>
             <point key="canvasLocation" x="194" y="642"/>
         </scene>
-        <!--Item-->
+        <!--Shopping Cart-->
         <scene sceneID="Pkg-14-THV">
             <objects>
                 <viewController id="5rt-Ld-nHY" customClass="ShoppingCart_ViewController" customModule="My_Market" customModuleProvider="target" sceneMemberID="viewController">
@@ -67,7 +67,7 @@
                             <constraint firstItem="RfE-iY-NKs" firstAttribute="bottom" secondItem="IHf-cf-4dG" secondAttribute="bottom" id="Ohc-gA-YcW"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="cart.fill" catalog="system" id="CbM-1A-Dex"/>
+                    <tabBarItem key="tabBarItem" title="Shopping Cart" image="cart.fill" catalog="system" id="CbM-1A-Dex"/>
                     <connections>
                         <outlet property="productsTableView" destination="IHf-cf-4dG" id="ZpU-n1-seB"/>
                     </connections>
@@ -82,6 +82,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="jbj-8K-0Zn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oBD-PO-bn0">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -97,7 +98,7 @@
     </scenes>
     <resources>
         <image name="cart.fill" catalog="system" width="128" height="102"/>
-        <image name="xmark.bin.fill" catalog="system" width="128" height="93"/>
+        <image name="circle.grid.2x2.fill" catalog="system" width="128" height="112"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

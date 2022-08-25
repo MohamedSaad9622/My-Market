@@ -12,7 +12,6 @@ class ProductsViewController: UIViewController {
     @IBOutlet weak var products_tableView: UITableView!
     
     var productsArray: [ProductModel] = []
-    
     var productsViewModel: ProductsProtocol = ProductsViewModel()
     
     override func viewDidLoad() {
@@ -79,10 +78,10 @@ extension ProductsViewController: UITableViewDataSource {
 //MARK: -                                   Add To Shopping Cart Protocol
 
 extension ProductsViewController: AddToCart_Protocol {
-    
     func addToCart(productIndex: Int) {
         self.productsViewModel.addToShoppingCart(product: productsArray[productIndex])
     }
+
     
     func responseOfAddToShoppingCart() {
         self.productsViewModel.addToShoppingCart_status = { error in
