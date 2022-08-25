@@ -22,6 +22,8 @@ class ProductsViewController: UIViewController {
 
         productsViewModel.fetchData()
         responseOfFetchProducts()
+        responseOfAddToShoppingCart()
+        responseOfRemoveFromShoppingCart()
     }
     
  
@@ -35,7 +37,7 @@ class ProductsViewController: UIViewController {
                 }
             }
             if let error = error {
-                print("*****************\(error.localizedDescription)")
+                print("\(error.localizedDescription)")
             }
             
         }
@@ -57,17 +59,63 @@ extension ProductsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return productsArray.count
     }
-    
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return productsArray.count
-//    }
-//
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.product_cell_id.rawValue, for: indexPath) as? Product_TableViewCell else { return UITableViewCell() }
-        cell.setCell(product: productsArray[indexPath.row])
+        cell.cartDelegate = self
+        cell.setCell(product: productsArray[indexPath.row], productIndex: indexPath.row)
         return cell
     }
+    
+    
+}
+
+
+//MARK: -                                   Update Cart Protocol
+
+extension ProductsViewController: UpdateCart_Protocol {
+    
+    func addToCart(productIndex: Int) {
+        self.productsViewModel.addToShoppingCart(product: productsArray[productIndex])
+    }
+    
+    func removeFromCart(productIndex: Int) {
+        self.productsViewModel.removeFromShoppingCart(productId: productsArray[productIndex].id)
+    }
+
+    
+//MARK: -                           Response of update Shopping Cart
+    
+    func responseOfAddToShoppingCart() {
+        self.productsViewModel.addToShoppingCart_status = { error in
+            if let error = error {
+                addAlert(title: "Error", message: error.localizedDescription, ActionTitle: "Cancel", viewController: self)
+            }
+            else{
+                DispatchQueue.main.async {
+                    self.products_tableView.reloadData()
+                }
+                addAlert(title: "Done", message: "Product Added to Shopping Cart", ActionTitle: "OK", viewController: self)
+            }
+        }
+    }
+    
+    func responseOfRemoveFromShoppingCart() {
+        self.productsViewModel.removeFromShoppingCart_status = { error in
+            if let error = error {
+                addAlert(title: "Error", message: error.localizedDescription, ActionTitle: "Cancel", viewController: self)
+            }
+            else{
+                DispatchQueue.main.async {
+                    self.products_tableView.reloadData()
+                }
+                addAlert(title: "Done", message: "Product Removed From Shopping Cart", ActionTitle: "OK", viewController: self)
+            }
+            
+        }
+    }
+    
     
     
 }
