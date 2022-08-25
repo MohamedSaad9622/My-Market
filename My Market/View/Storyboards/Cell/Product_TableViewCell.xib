@@ -55,9 +55,9 @@
                 <constraint firstItem="e0B-d0-uKe" firstAttribute="width" secondItem="KGk-i7-Jjw" secondAttribute="width" multiplier="0.1" id="Gka-Co-FSO"/>
             </constraints>
             <connections>
-                <outlet property="addToCart_button" destination="e0B-d0-uKe" id="eSG-DB-fUm"/>
                 <outlet property="productTitle_label" destination="I9v-ow-aps" id="Czs-Sm-Z8R"/>
                 <outlet property="product_imageView" destination="2Cv-10-cjN" id="Ma2-2s-W0V"/>
+                <outlet property="updateShoppingCart_button" destination="e0B-d0-uKe" id="eSG-DB-fUm"/>
             </connections>
             <point key="canvasLocation" x="159.42028985507247" y="-67.96875"/>
         </tableViewCell>
