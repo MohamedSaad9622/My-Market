@@ -13,6 +13,8 @@ class ShoppingCart_ViewController: UIViewController {
     
     var productsArray: [ProductModel_firebase] = []
     var shoppingCartModelView: ShoppingCart_Protocol = ShoppingCart_ViewModel()
+    var networkIndicator = UIActivityIndicatorView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +26,20 @@ class ShoppingCart_ViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.addNetworkIndicator()
         shoppingCartModelView.fetchProducts()
     }
+    
+    
+    func addNetworkIndicator() {
+        DispatchQueue.main.async {
+            self.networkIndicator.style = .large
+            self.networkIndicator.center = self.view.center
+            self.networkIndicator.startAnimating()
+            self.view.addSubview(self.networkIndicator)
+        }
+    }
+    
     
 }
 
@@ -65,10 +79,12 @@ extension ShoppingCart_ViewController {
     
     func responseOfFetchProducts() {
         shoppingCartModelView.bindingProducts = { products, error in
+            self.networkIndicator.stopAnimating()
             if let error = error {
                 let alert = UIAlertController(title: "Warning", message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
                 alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: { _ in
+                    self.addNetworkIndicator()
                     self.shoppingCartModelView.fetchProducts()
                 }))
                 

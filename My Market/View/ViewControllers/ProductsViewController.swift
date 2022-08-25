@@ -11,17 +11,31 @@ class ProductsViewController: UIViewController {
 
     @IBOutlet weak var products_tableView: UITableView!
     
+
     var productsArray: [ProductModel] = []
     var productsViewModel: ProductsProtocol = ProductsViewModel()
+    var networkIndicator = UIActivityIndicatorView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.products_tableView.register(UINib(nibName: Constants.product_cell_nib, bundle: nil), forCellReuseIdentifier: Constants.product_cell_id)
 
+        self.addNetworkIndicator()
         productsViewModel.fetchProducts()
         responseOfFetchProducts()
         responseOfAddToShoppingCart()
+    }
+
+    
+    func addNetworkIndicator() {
+        DispatchQueue.main.async {
+            self.networkIndicator.style = .large
+            self.networkIndicator.center = self.view.center
+            self.networkIndicator.startAnimating()
+            self.view.addSubview(self.networkIndicator)
+        }
     }
     
     
@@ -29,6 +43,7 @@ class ProductsViewController: UIViewController {
  
     func responseOfFetchProducts() {
         self.productsViewModel.bindingProducts = { products, error in
+            self.networkIndicator.stopAnimating()
             if let products = products {
                 self.productsArray = products
                 DispatchQueue.main.async {
@@ -36,7 +51,16 @@ class ProductsViewController: UIViewController {
                 }
             }
             if let error = error {
-                print("\(error.localizedDescription)")
+                let alert = UIAlertController(title: "Warning", message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: { _ in
+                    self.addNetworkIndicator()
+                    self.productsViewModel.fetchProducts()
+                }))
+                
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
             
         }
