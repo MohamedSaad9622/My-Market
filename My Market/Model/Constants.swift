@@ -7,16 +7,15 @@
 
 import Foundation
 
-enum Constants: String {
+
+struct Constants {
     
-    case product_cell_id = "productsCell"
-    case product_cell_nib = "Product_TableViewCell"
-    case collectionNameInFirebase = "Shopping Cart"
+    static let product_cell_id = "productsCell"
+    static let product_cell_nib = "Product_TableViewCell"
     
+    static let collectionNameInFirebase = "Shopping Cart"
+
+    static let MaxNumberOfDays_inShoppingCart: Int = 3
+
 }
 
-
-enum AddToCart_ButtonStatus: String {
-    case notAdded = "cart.badge.plus"
-    case added = "cart.badge.plus.fill"
-}

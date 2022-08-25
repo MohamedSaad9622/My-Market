@@ -15,11 +15,11 @@ class FirebaseManager: FirebaseServices {
     let database = Firestore.firestore()
     
  
-//MARK: -                               Add Product to Shopping Cart
+//MARK: -                               Add Product to Firebase
     
-    func addToShoppingCart(product: ProductModel, completion: @escaping ((Error?) -> Void)) {
+    func addToShoppingCart(product: ProductModel_firebase, completion: @escaping ((Error?) -> Void)) {
         do{
-            try database.collection(Constants.collectionNameInFirebase.rawValue).document(String(product.id)).setData(from: product)
+            try database.collection(Constants.collectionNameInFirebase).document(String(product.id)).setData(from: product)
             completion(nil)
         }
         catch let error {
@@ -29,11 +29,12 @@ class FirebaseManager: FirebaseServices {
     }
     
     
-//MARK: -                               Remove Product from Shopping Cart
+//MARK: -                               Remove Product from Firebase
+    
     
     func removeFromShoppingCart(productId: Int, completion: @escaping ((Error?) -> Void)) {
         
-        database.collection(Constants.collectionNameInFirebase.rawValue).document("\(productId)").updateData([
+        database.collection(Constants.collectionNameInFirebase).document("\(productId)").updateData([
             "id": FieldValue.delete(),
             "title": FieldValue.delete(),
             "image": FieldValue.delete()
@@ -46,7 +47,7 @@ class FirebaseManager: FirebaseServices {
             } else {
                 
                 // delete document
-                self.database.collection(Constants.collectionNameInFirebase.rawValue).document("\(productId)").delete() { error in
+                self.database.collection(Constants.collectionNameInFirebase).document("\(productId)").delete() { error in
                         if let error = error {
                             completion(error)
                         } else {
@@ -57,6 +58,32 @@ class FirebaseManager: FirebaseServices {
             }
         
     }
+    
+    
+//MARK: -                                   Fetch Products From Firebase
+        
+        
+        
+        func fetchProducts(completion: @escaping (([ProductModel_firebase]?, Error?) -> Void)) {
+            
+            var products: [ProductModel_firebase] = []
+            
+            database.collection(Constants.collectionNameInFirebase).getDocuments() { (querySnapshot, error) in
+                if let error = error {
+                    completion(nil, error)
+                } else {
+                    for document in querySnapshot!.documents {
+                        let product = try? document.data(as: ProductModel_firebase.self)
+                        if let product = product {
+                            products.append(product)
+                        }
+
+                    }
+                    completion(products, nil)
+                }
+            }
+            
+        }
     
     
     

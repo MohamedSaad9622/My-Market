@@ -9,9 +9,8 @@ import Foundation
 
 protocol FirebaseServices {
     
-    func addToShoppingCart(product: ProductModel , completion: @escaping ((Error?) -> Void))
-        
-//    func fetchFavorites(completion: @escaping (([ProductEntity_firestore]?, Error?) -> Void))
+    func addToShoppingCart(product: ProductModel_firebase , completion: @escaping ((Error?) -> Void))
     func removeFromShoppingCart(productId: Int, completion: @escaping ((Error?) -> Void))
+    func fetchProducts(completion: @escaping (([ProductModel_firebase]?, Error?) -> Void))
     
 }

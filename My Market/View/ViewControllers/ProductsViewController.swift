@@ -18,20 +18,20 @@ class ProductsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.products_tableView.register(UINib(nibName: Constants.product_cell_nib.rawValue, bundle: nil), forCellReuseIdentifier: Constants.product_cell_id.rawValue)
+        self.products_tableView.register(UINib(nibName: Constants.product_cell_nib, bundle: nil), forCellReuseIdentifier: Constants.product_cell_id)
 
-        productsViewModel.fetchData()
+        productsViewModel.fetchProducts()
         responseOfFetchProducts()
         responseOfAddToShoppingCart()
-        responseOfRemoveFromShoppingCart()
     }
     
+    
+//MARK: -                                       Response of Fetch Products
  
     func responseOfFetchProducts() {
-        self.productsViewModel.bindingData = { products, error in
+        self.productsViewModel.bindingProducts = { products, error in
             if let products = products {
                 self.productsArray = products
-                print(self.productsArray)
                 DispatchQueue.main.async {
                     self.products_tableView.reloadData()
                 }
@@ -56,15 +56,19 @@ extension ProductsViewController: UITableViewDelegate {
 }
 
 extension ProductsViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return productsArray.count
+        return 1
     }
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return productsArray.count
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.product_cell_id.rawValue, for: indexPath) as? Product_TableViewCell else { return UITableViewCell() }
-        cell.cartDelegate = self
-        cell.setCell(product: productsArray[indexPath.row], productIndex: indexPath.row)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.product_cell_id, for: indexPath) as? Product_TableViewCell else { return UITableViewCell() }
+        cell.addToCartDelegate = self
+        cell.setCell(productTitle: productsArray[indexPath.section].title, productImage: productsArray[indexPath.section].image.src, productIndex: indexPath.section)
         return cell
     }
     
@@ -72,20 +76,13 @@ extension ProductsViewController: UITableViewDataSource {
 }
 
 
-//MARK: -                                   Update Cart Protocol
+//MARK: -                                   Add To Shopping Cart Protocol
 
-extension ProductsViewController: UpdateCart_Protocol {
+extension ProductsViewController: AddToCart_Protocol {
     
     func addToCart(productIndex: Int) {
         self.productsViewModel.addToShoppingCart(product: productsArray[productIndex])
     }
-    
-    func removeFromCart(productIndex: Int) {
-        self.productsViewModel.removeFromShoppingCart(productId: productsArray[productIndex].id)
-    }
-
-    
-//MARK: -                           Response of update Shopping Cart
     
     func responseOfAddToShoppingCart() {
         self.productsViewModel.addToShoppingCart_status = { error in
@@ -96,26 +93,10 @@ extension ProductsViewController: UpdateCart_Protocol {
                 DispatchQueue.main.async {
                     self.products_tableView.reloadData()
                 }
-                addAlert(title: "Done", message: "Product Added to Shopping Cart", ActionTitle: "OK", viewController: self)
+                addAlert(title: "Done", message: "The product has been successfully added to the cart", ActionTitle: "OK", viewController: self)
             }
         }
     }
-    
-    func responseOfRemoveFromShoppingCart() {
-        self.productsViewModel.removeFromShoppingCart_status = { error in
-            if let error = error {
-                addAlert(title: "Error", message: error.localizedDescription, ActionTitle: "Cancel", viewController: self)
-            }
-            else{
-                DispatchQueue.main.async {
-                    self.products_tableView.reloadData()
-                }
-                addAlert(title: "Done", message: "Product Removed From Shopping Cart", ActionTitle: "OK", viewController: self)
-            }
-            
-        }
-    }
-    
-    
+
     
 }

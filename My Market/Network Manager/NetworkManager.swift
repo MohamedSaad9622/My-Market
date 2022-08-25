@@ -12,7 +12,7 @@ class NetworkManager: FetchProductsProtocol {
     
     func fetchProducts(completion: @escaping (([ProductModel]?, Error?) -> Void)) {
         
-        if let url = URL(string: UrlServices.products()) {
+        if let url = URL(string: UrlServices.productsUrl()) {
             AF.request(url).responseDecodable(of: Products.self) { response in
                 if let products = response.value {
                     completion(products.products, nil)

@@ -17,45 +17,47 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Cv-10-cjN">
-                        <rect key="frame" x="0.0" y="0.0" width="668" height="414"/>
+                        <rect key="frame" x="5" y="5" width="658" height="389.5"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="I9v-ow-aps">
-                        <rect key="frame" x="5" y="419" width="521" height="48.5"/>
+                        <rect key="frame" x="5" y="399.5" width="581" height="73"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0B-d0-uKe">
-                        <rect key="frame" x="596" y="419" width="68" height="67"/>
+                        <rect key="frame" x="596" y="406" width="68" height="66.5"/>
                         <constraints>
-                            <constraint firstAttribute="height" secondItem="e0B-d0-uKe" secondAttribute="width" multiplier="1:1" id="PST-pK-Zwg"/>
+                            <constraint firstAttribute="width" secondItem="e0B-d0-uKe" secondAttribute="height" multiplier="1:1" id="MV2-P0-irD"/>
                         </constraints>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         <state key="normal" backgroundImage="cart.badge.plus" catalog="system"/>
                         <connections>
-                            <action selector="addProductToCart:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Voq-J3-oGb"/>
+                            <action selector="updateShoppingCart:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4sP-d0-qDr"/>
                         </connections>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="2Cv-10-cjN" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.85" id="1gW-2F-QzG"/>
+                    <constraint firstItem="2Cv-10-cjN" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.8" id="1gW-2F-QzG"/>
+                    <constraint firstItem="e0B-d0-uKe" firstAttribute="leading" secondItem="I9v-ow-aps" secondAttribute="trailing" constant="10" id="7Hs-1G-1cW"/>
+                    <constraint firstAttribute="trailing" secondItem="e0B-d0-uKe" secondAttribute="trailing" constant="5" id="CAF-mc-Pzp"/>
                     <constraint firstItem="I9v-ow-aps" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="CJs-wS-uvy"/>
+                    <constraint firstItem="2Cv-10-cjN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="CPa-6U-t6p"/>
                     <constraint firstItem="I9v-ow-aps" firstAttribute="top" secondItem="2Cv-10-cjN" secondAttribute="bottom" constant="5" id="DUk-ei-Vix"/>
-                    <constraint firstItem="I9v-ow-aps" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.78" id="F1A-FY-tus"/>
-                    <constraint firstItem="e0B-d0-uKe" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.1" id="MWj-AE-mgW"/>
-                    <constraint firstItem="I9v-ow-aps" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.1" id="PX9-hu-CKX"/>
-                    <constraint firstItem="e0B-d0-uKe" firstAttribute="top" secondItem="I9v-ow-aps" secondAttribute="top" id="TcB-g9-KRK"/>
-                    <constraint firstAttribute="trailing" secondItem="e0B-d0-uKe" secondAttribute="trailing" constant="5" id="VYB-Os-xLd"/>
-                    <constraint firstAttribute="trailing" secondItem="2Cv-10-cjN" secondAttribute="trailing" id="aNo-Gp-6Hi"/>
-                    <constraint firstItem="2Cv-10-cjN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="cGS-cO-1Km"/>
-                    <constraint firstItem="2Cv-10-cjN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="nej-qD-kSm"/>
+                    <constraint firstItem="I9v-ow-aps" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.15" id="PX9-hu-CKX"/>
+                    <constraint firstItem="e0B-d0-uKe" firstAttribute="bottom" secondItem="I9v-ow-aps" secondAttribute="bottom" id="bG7-Qt-Cdc"/>
+                    <constraint firstItem="2Cv-10-cjN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="egu-S3-kEq"/>
+                    <constraint firstAttribute="trailing" secondItem="2Cv-10-cjN" secondAttribute="trailing" constant="5" id="o2c-Hm-1ja"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <constraints>
+                <constraint firstItem="e0B-d0-uKe" firstAttribute="width" secondItem="KGk-i7-Jjw" secondAttribute="width" multiplier="0.1" id="Gka-Co-FSO"/>
+            </constraints>
             <connections>
-                <outlet property="addToCart_button" destination="e0B-d0-uKe" id="kLn-o3-BjY"/>
+                <outlet property="addToCart_button" destination="e0B-d0-uKe" id="eSG-DB-fUm"/>
                 <outlet property="productTitle_label" destination="I9v-ow-aps" id="Czs-Sm-Z8R"/>
-                <outlet property="product_imageview" destination="2Cv-10-cjN" id="Ma2-2s-W0V"/>
+                <outlet property="product_imageView" destination="2Cv-10-cjN" id="Ma2-2s-W0V"/>
             </connections>
             <point key="canvasLocation" x="159.42028985507247" y="-67.96875"/>
         </tableViewCell>
