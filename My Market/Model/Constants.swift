@@ -10,6 +10,9 @@ import Foundation
 
 struct Constants {
     
+    static let products_Storyboard = "Products"
+    static let tabBar_viewController_id = "TabBarViewControllerId"
+    
     static let product_cell_id = "productsCell"
     static let product_cell_nib = "Product_TableViewCell"
     
