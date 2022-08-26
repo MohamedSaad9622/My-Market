@@ -24,6 +24,7 @@ struct Constants {
 
 
 enum UpdateCart_ButtonStatus: String {
-    case added = "cart.badge.plus"
-    case notAdded = "cart.badge.minus"
+    case add = "cart.badge.plus"
+    case added = "cart.badge.plus.fill"
+    case remove = "cart.badge.minus.fill"
 }

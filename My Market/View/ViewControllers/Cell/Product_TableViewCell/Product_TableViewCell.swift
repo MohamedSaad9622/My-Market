@@ -47,9 +47,9 @@ class Product_TableViewCell: UITableViewCell {
     func setCell(productTitle: String, productImage: String, productIndex: Int) {
         // to set background fo button to add or remove image
         if addToCartDelegate == nil {
-            self.updateShoppingCart_button.setBackgroundImage(UIImage(systemName: UpdateCart_ButtonStatus.notAdded.rawValue), for: .normal)
+            self.updateShoppingCart_button.setBackgroundImage(UIImage(systemName: UpdateCart_ButtonStatus.remove.rawValue), for: .normal)
         }else{
-            self.updateShoppingCart_button.setBackgroundImage(UIImage(systemName: UpdateCart_ButtonStatus.added.rawValue), for: .normal)
+            self.updateShoppingCart_button.setBackgroundImage(UIImage(systemName: UpdateCart_ButtonStatus.add.rawValue), for: .normal)
         }
         self.productIndex = productIndex
         self.productTitle_label.text = productTitle
