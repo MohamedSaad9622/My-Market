@@ -23,6 +23,7 @@ class NetworkManager: FetchProductsProtocol {
             }
         }
         
+        
     }
     
     

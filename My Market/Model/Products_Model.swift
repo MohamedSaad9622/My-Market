@@ -11,7 +11,6 @@ struct Products: Codable {
     let products: [ProductModel]
 }
 
-
 struct ProductModel: Codable {
     let id: Int
     let title: String
