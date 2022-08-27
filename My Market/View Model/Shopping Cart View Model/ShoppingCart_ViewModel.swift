@@ -47,13 +47,14 @@ class ShoppingCart_ViewModel: ShoppingCart_Protocol {
         }
     }
     
+// Filter products by the number of days they have been in your shopping cart.
     func filterProducts(products: [ProductModel_firebase]) -> [ProductModel_firebase] {
         var filteredProducts: [ProductModel_firebase] = []
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
         for product in products {
             if let date = dateFormatter.date(from: product.timeCreated) {
-                let numberOfDays = Calendar.current.dateComponents([.minute], from: date, to: Date()).minute ?? 0
+                let numberOfDays = Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0
                 if numberOfDays < Constants.MaxNumberOfDays_inShoppingCart {
                     filteredProducts.append(product)
                 }else{

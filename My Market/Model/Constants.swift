@@ -26,7 +26,7 @@ struct Constants {
     //MARK: -                                        OTHERS
     
     static let collectionNameInFirebase = "Shopping Cart"
-    static let MaxNumberOfDays_inShoppingCart: Int = 1
+    static let MaxNumberOfDays_inShoppingCart: Int = 3
     static let splashScreen_VideoName = "splashScreen"
 
 }

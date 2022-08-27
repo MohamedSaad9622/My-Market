@@ -17,13 +17,13 @@ class Product_TableViewCell: UITableViewCell {
     @IBOutlet weak private var productTitle_label: UILabel!
     @IBOutlet weak private var updateShoppingCart_button: UIButton!
    
-    var addToCartDelegate: AddToCart_Protocol?
+    var updateCartDelegate: updateShoppingCart_Protocol?
     var removeFromCartDelegate: RemoveFromCart_Protocol?
     var productIndex: Int?
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     
@@ -33,8 +33,17 @@ class Product_TableViewCell: UITableViewCell {
     
     @IBAction func updateShoppingCart(_ sender: Any) {
         guard let productIndex = productIndex else { return }
-        if let addToCartDelegate = addToCartDelegate {
-            addToCartDelegate.addToCart(productIndex: productIndex)
+        
+        if let updateCartDelegate = updateCartDelegate {
+            if self.updateShoppingCart_button.currentBackgroundImage == UIImage(systemName: UpdateCart_ButtonStatus.add.rawValue){
+                self.updateShoppingCart_button.setBackgroundImage(UIImage(systemName: UpdateCart_ButtonStatus.remove.rawValue), for: .normal)
+                updateCartDelegate.addToCart(productIndex: productIndex)
+            }
+            else{
+                self.updateShoppingCart_button.setBackgroundImage(UIImage(systemName: UpdateCart_ButtonStatus.add.rawValue), for: .normal)
+                updateCartDelegate.RemoveFromCart(productIndex: productIndex)
+            }
+            
         }
         
         if let removeFromCartDelegate = removeFromCartDelegate {
@@ -44,9 +53,9 @@ class Product_TableViewCell: UITableViewCell {
     }
     
     
-    func setCell(productTitle: String, productImage: String, productIndex: Int) {
+    func setCell(productTitle: String, productImage: String, productIndex: Int, addedToCart: Bool) {
         // to set background fo button to add or remove image
-        if addToCartDelegate == nil {
+        if addedToCart {
             self.updateShoppingCart_button.setBackgroundImage(UIImage(systemName: UpdateCart_ButtonStatus.remove.rawValue), for: .normal)
         }else{
             self.updateShoppingCart_button.setBackgroundImage(UIImage(systemName: UpdateCart_ButtonStatus.add.rawValue), for: .normal)

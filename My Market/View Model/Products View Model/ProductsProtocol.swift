@@ -16,4 +16,9 @@ protocol ProductsProtocol {
     func addToShoppingCart(product: ProductModel)
     var addToShoppingCart_status: ((Error?) -> Void) {set get}
     
+    func removeFromShoppingCart(productId: Int)
+    var removeFromShoppingCart_status: ((Error?) -> Void) {set get}
+    
+    func addedToCart(productId: Int) -> Bool
+    
 }

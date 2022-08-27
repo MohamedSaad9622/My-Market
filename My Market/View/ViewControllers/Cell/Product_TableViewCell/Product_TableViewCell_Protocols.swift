@@ -14,3 +14,6 @@ protocol AddToCart_Protocol {
 protocol RemoveFromCart_Protocol {
     func RemoveFromCart(productIndex: Int)
 }
+
+protocol updateShoppingCart_Protocol: AddToCart_Protocol, RemoveFromCart_Protocol {
+}

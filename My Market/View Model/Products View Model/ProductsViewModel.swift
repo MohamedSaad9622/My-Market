@@ -5,12 +5,15 @@
 //  Created by MAC on 24/08/2022.
 //
 
-import Foundation
+import UIKit
+
 
 class ProductsViewModel: ProductsProtocol {
     
     var apiService: FetchProductsProtocol
     var firebaseManager: FirebaseServices
+    
+    var defaults = UserDefaults.standard
     
     init( apiService: FetchProductsProtocol = NetworkManager(), firebaseManager: FirebaseServices = FirebaseManager() ) {
         self.apiService = apiService
@@ -67,6 +70,33 @@ class ProductsViewModel: ProductsProtocol {
                 self.addToShoppingCart_error = nil
             }
         }
+    }
+
+    
+//MARK: -                                    Remove Product From Shopping Cart
+    
+    var removeFromShoppingCart_error: Error? {
+        didSet{
+            removeFromShoppingCart_status(removeFromShoppingCart_error)
+        }
+    }
+    
+    var removeFromShoppingCart_status: ((Error?) -> Void) = { _ in }
+    
+    func removeFromShoppingCart(productId: Int) {
+        firebaseManager.removeFromShoppingCart(productId: productId) { error in
+            if let error = error {
+                self.removeFromShoppingCart_error = error
+            }
+            else{
+                self.removeFromShoppingCart_error = nil
+            }
+        }
+    }
+    
+    // check is added to shopping cart or not
+    func addedToCart(productId: Int) -> Bool {
+        return defaults.bool(forKey: "\(productId)")
     }
     
     

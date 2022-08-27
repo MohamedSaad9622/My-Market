@@ -13,6 +13,7 @@ import FirebaseFirestoreSwift
 class FirebaseManager: FirebaseServices {
     
     let database = Firestore.firestore()
+    let defaults = UserDefaults.standard
     
  
 //MARK: -                               Add Product to Firebase
@@ -20,6 +21,7 @@ class FirebaseManager: FirebaseServices {
     func addToShoppingCart(product: ProductModel_firebase, completion: @escaping ((Error?) -> Void)) {
         do{
             try database.collection(Constants.collectionNameInFirebase).document(String(product.id)).setData(from: product)
+            defaults.set(true, forKey: "\(product.id)")
             completion(nil)
         }
         catch let error {
@@ -44,7 +46,6 @@ class FirebaseManager: FirebaseServices {
 
             if let error = error {
                 completion(error)
-
             } else {
                 
                 // delete document
@@ -52,6 +53,7 @@ class FirebaseManager: FirebaseServices {
                         if let error = error {
                             completion(error)
                         } else {
+                            self.defaults.set(false, forKey: "\(productId)")
                             completion(nil)
                         }
                     }

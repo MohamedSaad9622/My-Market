@@ -12,9 +12,6 @@ target 'My Market' do
     # Pods for testing
   end
 
-  target 'My MarketUITests' do
-    # Pods for testing
-  end
 
   pod 'Alamofire'
   pod 'AlamofireImage'
