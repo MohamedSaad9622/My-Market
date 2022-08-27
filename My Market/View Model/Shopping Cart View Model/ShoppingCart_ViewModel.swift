@@ -53,7 +53,7 @@ class ShoppingCart_ViewModel: ShoppingCart_Protocol {
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
         for product in products {
             if let date = dateFormatter.date(from: product.timeCreated) {
-                let numberOfDays = Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0
+                let numberOfDays = Calendar.current.dateComponents([.minute], from: date, to: Date()).minute ?? 0
                 if numberOfDays < Constants.MaxNumberOfDays_inShoppingCart {
                     filteredProducts.append(product)
                 }else{

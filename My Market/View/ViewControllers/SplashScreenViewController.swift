@@ -16,16 +16,16 @@ class SplashScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        animationView = .init(name: "splashScreen")
+        animationView = .init(name: Constants.splashScreen_VideoName)
         animationView?.frame = view.bounds
         view.addSubview(animationView!)
         animationView?.play()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            let storyBoard : UIStoryboard = UIStoryboard(name: Constants.products_Storyboard, bundle:nil)
-            let homeVC = storyBoard.instantiateViewController(withIdentifier: Constants.tabBar_viewController_id) as! UITabBarController
-            homeVC.modalPresentationStyle = .fullScreen
-            self.present(homeVC, animated: false, completion: nil)
+            let storyboard : UIStoryboard = UIStoryboard(name: Constants.products_Storyboard, bundle:nil)
+            let productsViewController = storyboard.instantiateViewController(withIdentifier: Constants.tabBar_viewController_id) as! UITabBarController
+            productsViewController.modalPresentationStyle = .fullScreen
+            self.present(productsViewController, animated: false, completion: nil)
         }
         
     }

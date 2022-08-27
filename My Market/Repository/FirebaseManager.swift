@@ -35,9 +35,10 @@ class FirebaseManager: FirebaseServices {
     func removeFromShoppingCart(productId: Int, completion: @escaping ((Error?) -> Void)) {
         
         database.collection(Constants.collectionNameInFirebase).document("\(productId)").updateData([
-            "id": FieldValue.delete(),
-            "title": FieldValue.delete(),
-            "image": FieldValue.delete()
+            ProductFirebaseModel_keys.id.rawValue: FieldValue.delete(),
+            ProductFirebaseModel_keys.image.rawValue: FieldValue.delete(),
+            ProductFirebaseModel_keys.title.rawValue: FieldValue.delete(),
+            ProductFirebaseModel_keys.timeCreated.rawValue: FieldValue.delete()
         ])
         { error in
 

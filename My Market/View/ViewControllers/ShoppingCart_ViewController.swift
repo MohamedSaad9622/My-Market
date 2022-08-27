@@ -81,23 +81,17 @@ extension ShoppingCart_ViewController {
         shoppingCartModelView.bindingProducts = { products, error in
             self.networkIndicator.stopAnimating()
             if let error = error {
-                let alert = UIAlertController(title: "Warning", message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: { _ in
+                addAlert(title: AlertTitle.Warning.rawValue, message: error.localizedDescription, viewController: self, actionTitle: AlertActionTitle.Cancel.rawValue, additional_Action: UIAlertAction(title: AlertActionTitle.TryAgain.rawValue, style: .default, handler: { _ in
                     self.addNetworkIndicator()
                     self.shoppingCartModelView.fetchProducts()
                 }))
-                
-                DispatchQueue.main.async {
-                    self.present(alert, animated: true, completion: nil)
-                }
             }
             
             if let products = products {
                 self.productsArray = products
                 DispatchQueue.main.async {
                     if self.productsArray.count == 0 {
-                    addAlert(title: "Warning", message: "There are no Products in Shopping Cart", ActionTitle: "Cancel", viewController: self)
+                    addAlert(title: AlertTitle.Warning.rawValue, message: "There are no Products in Shopping Cart", viewController: self, actionTitle: AlertActionTitle.Ok.rawValue, additional_Action: nil)
                     }
                     self.productsTableView.reloadData()
                 }
@@ -115,30 +109,24 @@ extension ShoppingCart_ViewController {
 extension ShoppingCart_ViewController: RemoveFromCart_Protocol {
     
     func RemoveFromCart(productIndex: Int) {
-        let alert = UIAlertController(title: "Warning", message: "Are you sure you want to remove this product from Shopping Cart", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+        addAlert(title: AlertTitle.Warning.rawValue, message: "Are you sure you want to remove this product from Shopping Cart", viewController: self, actionTitle: AlertActionTitle.Cancel.rawValue, additional_Action: UIAlertAction(title: AlertActionTitle.Ok.rawValue, style: .default, handler: { _ in
             self.shoppingCartModelView.removeFromShoppingCart(productId: self.productsArray[productIndex].id)
             self.productsArray.remove(at: productIndex)
         }))
         
-        DispatchQueue.main.async {
-            self.present(alert, animated: true, completion: nil)
-        }
-        
     }
     
+    
     func responseOfRemoveProduct() {
-        
         self.shoppingCartModelView.removeFromShoppingCart_status = { error in
             if let error = error {
-                addAlert(title: "Error", message: error.localizedDescription, ActionTitle: "Cancel", viewController: self)
+                addAlert(title: AlertTitle.Error.rawValue, message: error.localizedDescription, viewController: self, actionTitle: AlertActionTitle.Cancel.rawValue, additional_Action: nil)
             }
             else{
                 DispatchQueue.main.async {
                     self.productsTableView.reloadData()
                 }
-                addAlert(title: "Done", message: "The product has been successfully removed from the shopping cart", ActionTitle: "OK", viewController: self)
+                addAlert(title: AlertTitle.Done.rawValue, message: "The product has been successfully removed from the shopping cart", viewController: self, actionTitle: AlertActionTitle.Ok.rawValue, additional_Action: nil)
             }
         }
     }

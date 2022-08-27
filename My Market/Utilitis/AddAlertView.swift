@@ -7,10 +7,12 @@
 
 import UIKit
 
-func addAlert(title:String, message:String, ActionTitle:String, viewController: UIViewController) {
+func addAlert(title:String, message:String, viewController: UIViewController, actionTitle:String, additional_Action: UIAlertAction?) {
     let alert = UIAlertController(title: title , message: message, preferredStyle: .alert)
-    alert.addAction(UIAlertAction(title: ActionTitle, style: .cancel, handler: nil))
-    
+    alert.addAction(UIAlertAction(title: actionTitle, style: .cancel, handler: nil))
+    if let action = additional_Action {
+        alert.addAction(action)
+    }
     DispatchQueue.main.async {
         viewController.present(alert, animated: true, completion: nil)
     }

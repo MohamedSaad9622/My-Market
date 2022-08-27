@@ -22,12 +22,21 @@ class ProductsViewController: UIViewController {
         
         self.products_tableView.register(UINib(nibName: Constants.product_cell_nib, bundle: nil), forCellReuseIdentifier: Constants.product_cell_id)
 
-        self.addNetworkIndicator()
-        productsViewModel.fetchProducts()
+        fetchProducts()
         responseOfFetchProducts()
         responseOfAddToShoppingCart()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        if productsArray.count == 0 {
+            fetchProducts()
+        }
+    }
+    
+    func fetchProducts() {
+        productsViewModel.fetchProducts()
+        self.addNetworkIndicator()
+    }
     
     func addNetworkIndicator() {
         DispatchQueue.main.async {
@@ -42,6 +51,7 @@ class ProductsViewController: UIViewController {
 //MARK: -                                       Response of Fetch Products
  
     func responseOfFetchProducts() {
+        
         self.productsViewModel.bindingProducts = { products, error in
             self.networkIndicator.stopAnimating()
             if let products = products {
@@ -51,16 +61,9 @@ class ProductsViewController: UIViewController {
                 }
             }
             if let error = error {
-                let alert = UIAlertController(title: "Warning", message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: { _ in
-                    self.addNetworkIndicator()
-                    self.productsViewModel.fetchProducts()
+                addAlert(title: AlertTitle.Warning.rawValue, message: error.localizedDescription, viewController: self, actionTitle: AlertActionTitle.Cancel.rawValue, additional_Action: UIAlertAction(title: AlertActionTitle.TryAgain.rawValue, style: .default, handler: { _ in
+                    self.fetchProducts()
                 }))
-                
-                DispatchQueue.main.async {
-                    self.present(alert, animated: true, completion: nil)
-                }
             }
             
         }
@@ -101,6 +104,7 @@ extension ProductsViewController: UITableViewDataSource {
 
 //MARK: -                                   Add To Shopping Cart Protocol
 
+
 extension ProductsViewController: AddToCart_Protocol {
     func addToCart(productIndex: Int) {
         self.productsViewModel.addToShoppingCart(product: productsArray[productIndex])
@@ -110,13 +114,13 @@ extension ProductsViewController: AddToCart_Protocol {
     func responseOfAddToShoppingCart() {
         self.productsViewModel.addToShoppingCart_status = { error in
             if let error = error {
-                addAlert(title: "Error", message: error.localizedDescription, ActionTitle: "Cancel", viewController: self)
+                addAlert(title: AlertTitle.Error.rawValue, message: error.localizedDescription, viewController: self, actionTitle: AlertActionTitle.Cancel.rawValue, additional_Action: nil)
             }
             else{
                 DispatchQueue.main.async {
                     self.products_tableView.reloadData()
                 }
-                addAlert(title: "Done", message: "The product has been successfully added to the cart", ActionTitle: "OK", viewController: self)
+                addAlert(title: AlertTitle.Done.rawValue, message: "The product has been successfully added to the cart", viewController: self, actionTitle: AlertActionTitle.Ok.rawValue, additional_Action: nil)
             }
         }
     }
